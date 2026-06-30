@@ -36,7 +36,7 @@ body{
 
 <body>
 
-<audio id="music" autoplay loop playsinline preload="auto">
+<audio id="music" loop preload="auto" playsinline>
     <source src="ANGELES.mp4" type="audio/mp4">
 </audio>
 
@@ -588,21 +588,30 @@ setInterval(actualizarContador, 1000);
 
 const music = document.getElementById("music");
 
+const music = document.getElementById("music");
+
+let musicaIniciada = false;
+
 function iniciarMusica() {
-    if (!music) return;
+    if (!music || musicaIniciada) return;
 
-    music.play().catch(() => {});
+    music.volume = 1;
+    music.muted = false;
 
-    document.removeEventListener("touchstart", iniciarMusica);
-    document.removeEventListener("touchmove", iniciarMusica);
-    window.removeEventListener("scroll", iniciarMusica);
-    window.removeEventListener("wheel", iniciarMusica);
+    music.play()
+        .then(() => {
+            musicaIniciada = true;
+            console.log("Música iniciada");
+        })
+        .catch(() => {
+            console.log("El navegador bloqueó la música hasta una interacción más directa.");
+        });
 }
 
-document.addEventListener("touchstart", iniciarMusica, { once: true, passive: true });
-document.addEventListener("touchmove", iniciarMusica, { once: true, passive: true });
-window.addEventListener("scroll", iniciarMusica, { once: true, passive: true });
-window.addEventListener("wheel", iniciarMusica, { once: true, passive: true });
+document.addEventListener("touchstart", iniciarMusica, { passive: true });
+document.addEventListener("pointerdown", iniciarMusica);
+document.addEventListener("click", iniciarMusica);
+document.addEventListener("keydown", iniciarMusica);
 </script>
 
 </body>
