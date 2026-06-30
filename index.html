@@ -593,16 +593,16 @@ function iniciarMusica() {
 
     music.play().catch(() => {});
 
+    document.removeEventListener("touchstart", iniciarMusica);
+    document.removeEventListener("touchmove", iniciarMusica);
     window.removeEventListener("scroll", iniciarMusica);
-    window.removeEventListener("touchmove", iniciarMusica);
     window.removeEventListener("wheel", iniciarMusica);
-    window.removeEventListener("pointerdown", iniciarMusica);
 }
 
+document.addEventListener("touchstart", iniciarMusica, { once: true, passive: true });
+document.addEventListener("touchmove", iniciarMusica, { once: true, passive: true });
 window.addEventListener("scroll", iniciarMusica, { once: true, passive: true });
-window.addEventListener("touchmove", iniciarMusica, { once: true, passive: true });
 window.addEventListener("wheel", iniciarMusica, { once: true, passive: true });
-window.addEventListener("pointerdown", iniciarMusica, { once: true, passive: true });
 </script>
 
 </body>
