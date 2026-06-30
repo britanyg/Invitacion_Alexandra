@@ -586,27 +586,23 @@ function actualizarContador(){
 actualizarContador();
 setInterval(actualizarContador, 1000);
 
-
-/* MÚSICA: intenta reproducir sola y, si el navegador lo bloquea,
-   inicia con el primer toque, scroll o movimiento sin mostrar botón */
 const music = document.getElementById("music");
 
-function reproducirMusica(){
-    if(!music) return;
+function iniciarMusica() {
+    if (!music) return;
 
-    music.volume = 1;
-    music.muted = false;
+    music.play().catch(() => {});
 
-    music.play().catch(() => {
-        console.log("El navegador bloqueó el autoplay con sonido. Se activará al primer toque o scroll.");
-    });
+    window.removeEventListener("scroll", iniciarMusica);
+    window.removeEventListener("touchmove", iniciarMusica);
+    window.removeEventListener("wheel", iniciarMusica);
+    window.removeEventListener("pointerdown", iniciarMusica);
 }
 
-window.addEventListener("load", reproducirMusica);
-
-["click", "touchstart", "touchmove", "scroll", "pointerdown"].forEach(evento => {
-    document.addEventListener(evento, reproducirMusica, { once:true, passive:true });
-});
+window.addEventListener("scroll", iniciarMusica, { once: true, passive: true });
+window.addEventListener("touchmove", iniciarMusica, { once: true, passive: true });
+window.addEventListener("wheel", iniciarMusica, { once: true, passive: true });
+window.addEventListener("pointerdown", iniciarMusica, { once: true, passive: true });
 </script>
 
 </body>
