@@ -586,12 +586,26 @@ function actualizarContador(){
 actualizarContador();
 setInterval(actualizarContador, 1000);
 
-window.addEventListener("load", () => {
-    const music = document.getElementById("music");
+
+/* MÚSICA: intenta reproducir sola y, si el navegador lo bloquea,
+   inicia con el primer toque, scroll o movimiento sin mostrar botón */
+const music = document.getElementById("music");
+
+function reproducirMusica(){
+    if(!music) return;
+
+    music.volume = 1;
+    music.muted = false;
 
     music.play().catch(() => {
-        console.log("El navegador bloqueó el autoplay.");
+        console.log("El navegador bloqueó el autoplay con sonido. Se activará al primer toque o scroll.");
     });
+}
+
+window.addEventListener("load", reproducirMusica);
+
+["click", "touchstart", "touchmove", "scroll", "pointerdown"].forEach(evento => {
+    document.addEventListener(evento, reproducirMusica, { once:true, passive:true });
 });
 </script>
 
