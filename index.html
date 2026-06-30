@@ -25,7 +25,7 @@ body{
 
 <body>
 
-<audio id="music" loop>
+<audio id="music" autoplay loop>
     <source src="ANGELES.mp4" type="audio/mpeg">
 </audio>
 
@@ -88,32 +88,22 @@ padding:40px 20px;
     margin-bottom:25px;
 }
 
-.music-button{
-    width:80px;
-    height:80px;
-    border:none;
-    border-radius:50%;
-    background:#556b91;
-    color:white;
-    font-size:2rem;
-    cursor:pointer;
-    margin-top:35px;
-    box-shadow:0 10px 25px rgba(0,0,0,.20);
-}
-
-@media(max-width:768px){
-    .bienvenida{font-size:1.4rem;}
-    .nombre-comunion{font-size:4rem;}
-    .music-button{width:65px;height:65px;font-size:1.5rem;}
-}
 </style>
 
 <div class="contenido-segunda">
     <p class="bienvenida">Bienvenidos a mi Primera Comunión</p>
     <h1 class="nombre-comunion">Regina Alexandra</h1>
 
-    <button class="music-button" onclick="toggleMusic()">▶</button>
+<img src="flores.png"
+     alt="Flores"
+     style="
+        width:320px;
+        max-width:80%;
+        display:block;
+        margin:35px auto 0;
+     ">
 </div>
+    
 </section>
 
 <!-- FECHA Y MAMÁ -->
@@ -526,15 +516,6 @@ padding:40px 20px;
 </section>
 
 <script>
-function toggleMusic(){
-    const music = document.getElementById("music");
-
-    if(music.paused){
-        music.play();
-    }else{
-        music.pause();
-    }
-}
 
 function confirmarAsistencia(){
     let nombre = document.getElementById("nombreInvitado").value;
@@ -588,6 +569,15 @@ function actualizarContador(){
 
 actualizarContador();
 setInterval(actualizarContador, 1000);
+
+
+    window.addEventListener("load", () => {
+    const music = document.getElementById("music");
+
+    music.play().catch(() => {
+        console.log("El navegador bloqueó el autoplay hasta la primera interacción.");
+    });
+});
 </script>
 
 </body>
